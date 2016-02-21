@@ -1,0 +1,20 @@
+suites:
+  users_app_suite:
+    namespace: UsersApp
+    psr4_prefix: UsersApp
+    spec_path: %paths.config%/tests/
+extensions:
+  - PhpSpec\Extension\CodeCoverageExtension
+code_coverage:
+  output:
+    html: build/coverage/spec
+    clover: build/coverage/spec/coverage.xml
+  format:
+    - html
+    - clover
+  blacklist:
+    - src/Infrastructure/Persistence/Doctrine/Repository
+    - src/Infrastructure/Ui/Http
+rerunner:
+  path: vendor/bin/phpspec
+  commands: [describe, exemplify]

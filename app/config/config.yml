@@ -1,0 +1,54 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+parameters:
+    locale: en
+
+framework:
+    secret: "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     "%kernel.root_dir%/data.sqlite" #:memory:
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        mappings:
+          UsersApp:
+            type: yml
+            dir: %kernel.root_dir%/../src/Infrastructure/Persistence/Doctrine/mappings
+            prefix: UsersApp\Infrastructure\Authentication
+
+# Lexik JWT Configuration
+lexik_jwt_authentication:
+    private_key_path: %kernel.root_dir%/var/jwt/private.pem
+    public_key_path: %kernel.root_dir%/var/jwt/public.pem
+    pass_phrase: %jwt_key_pass_phrase%
+    token_ttl: 86400

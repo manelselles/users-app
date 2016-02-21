@@ -1,0 +1,33 @@
+services:
+
+    # Controller
+    index_controller:
+        class: UsersApp\Infrastructure\Ui\Http\IndexController
+        arguments: ['@twig', '@user_repository', '@create_user', '@session', '@router']
+    security_controller:
+        class: UsersApp\Infrastructure\Ui\Http\SecurityController
+        arguments: ['@twig', '@security.authentication_utils']
+    api_controller:
+        class: UsersApp\Infrastructure\Ui\Http\APIController
+        arguments: ['@user_repository', '@create_user']
+
+    # Application service
+    create_user:
+        class: UsersApp\Application\CreateUser
+        arguments: ['@user_repository', '@password_encoder']
+
+    # Service
+    password_encoder:
+        class: UsersApp\Infrastructure\Authentication\PasswordEncoder
+        arguments: ['@security.encoder_factory']
+
+    # Repository
+    user_repository:
+        class: Doctrine\Common\Persistence\ObjectRepository
+        factory: ['@doctrine', 'getRepository']
+        arguments: ['UsersApp\Infrastructure\Authentication\AuthenticationUser']
+
+    # Security user provider
+    app_users_custom_provider:
+        class: UsersApp\Infrastructure\Authentication\CustomUserProvider
+        arguments: ['@user_repository']

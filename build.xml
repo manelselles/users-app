@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="UsersApp" default="help">
+    <property name="bindir" value="${basedir}/vendor/bin" />
+
+    <target name="help" description="Display detailed usage information">
+        <echo>Type "ant -p" to see a list of targets</echo>
+    </target>
+
+    <target name="test" depends="doctrine, phpunit,phpspec,behat"/>
+
+    <target name="doctrine">
+        <exec executable="${basedir}/bin/console" failonerror="true">
+            <arg value="doctrine:schema:update" />
+            <arg value="--force" />
+        </exec>
+    </target>
+
+    <target name="behat">
+        <exec executable="${bindir}/behat" failonerror="true">
+            <arg value="--config" />
+            <arg value="${basedir}/behat.yml" />
+            <arg value="--format" />
+            <arg value="progress" />
+            <arg value="--tags" />
+            <arg value="~skip" />
+            <arg value="--stop-on-failure" />
+        </exec>
+    </target>
+
+    <target name="phpspec">
+        <exec executable="${bindir}/phpspec" failonerror="true">
+            <arg value="run" />
+            <arg value="--config" />
+            <arg value="phpspec.yml" />
+        </exec>
+    </target>
+
+    <target name="phpunit">
+        <exec executable="${bindir}/phpunit" failonerror="true">
+            <arg value="--configuration" />
+            <arg value="phpunit.xml" />
+        </exec>
+    </target>
+
+    <target name="run-server">
+        <exec executable="${basedir}/bin/console" failonerror="true">
+            <arg value="server:run" />
+        </exec>
+    </target>
+
+</project>

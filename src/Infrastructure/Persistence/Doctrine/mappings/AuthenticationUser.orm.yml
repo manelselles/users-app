@@ -1,0 +1,14 @@
+UsersApp\Infrastructure\Authentication\AuthenticationUser:
+  type: entity
+  repositoryClass: UsersApp\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository
+  table: users
+  fields:
+    username:
+      id: true
+      type: string
+    password:
+      type: string
+      nullable: false
+    active:
+      type: boolean
+      nullable: false

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+
+            <div>
+                Hello {{ app.user.getUsername() }}
+            </div>
+
+            <h1>Users</h1>
+
+            <div>
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    {{ flashMessage }}
+                {% endfor %}
+            </div>
+
+            <ul>
+                {% for user in users %}
+                    <li>{{ user.username }}  {% for rol in user.roles %} -- {{ rol }}{% endfor %}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="next">
+                <a id="create_user" href="{{ path('app_create_user') }}">Create user</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

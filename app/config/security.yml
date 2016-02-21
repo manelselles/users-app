@@ -1,0 +1,69 @@
+security:
+
+    encoders:
+      Symfony\Component\Security\Core\User\User: #plaintext
+          algorithm: bcrypt
+          cost: 12
+      UsersApp\Infrastructure\Authentication\AuthenticationUser:
+          algorithm: bcrypt
+          cost: 12
+
+    providers:
+        in_memory:
+            memory:
+                users:
+                    admin: { password: $2a$12$MaWOJCSWCI6zHAtOKdPQF.h8XaTSxJHHdl7jSAO7SjLsUlLK/9HLC, roles: [ 'ROLE_ADMIN' ] } #admin
+        app_users_with_custom_provider:
+            id: app_users_custom_provider
+        app_users_with_doctrine:
+            entity: { class: UsersApp\Infrastructure\Authentication\AuthenticationUser, property: username }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login_api:
+            pattern: ^/api/login
+            stateless: true
+            anonymous: true
+            form_login:
+                provider: app_users_with_custom_provider
+                check_path: api_login
+                username_parameter: username
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        api_api:
+            pattern: ^/api
+            stateless: true
+            provider: app_users_with_custom_provider
+            lexik_jwt:
+                authorization_header: # check token in Authorization Header
+                    enabled: true
+                    prefix:  Bearer
+                    name:    Authorization
+                query_parameter:      # check token in query string parameter
+                    enabled: true
+                    name:    bearer
+
+        admin:
+            pattern: ^/
+            anonymous: ~
+            #provider: in_memory
+            #provider: app_users_with_doctrine
+            provider: app_users_with_custom_provider
+            #http_basic: ~
+            form_login:
+                login_path: app_login
+                check_path: app_login_check
+            logout:
+                path:   app_logout
+                target: app_index
+
+    access_control:
+        #- { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /,       roles: IS_AUTHENTICATED_REMEMBERED }

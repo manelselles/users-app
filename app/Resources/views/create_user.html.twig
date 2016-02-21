@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+
+            <h1>Create user</h1>
+
+            {% if error %}
+                <div>{{ error }}</div>
+            {% endif %}
+
+            <form method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ username }}" required="required">
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="{{ password }}" required="required"/>
+
+                <button type="submit" name="_submit">create user</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

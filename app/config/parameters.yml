@@ -1,0 +1,3 @@
+parameters:
+    secret: d4fbd524af1f880696e3f6008b8b6913a477cdc2
+    jwt_key_pass_phrase: manel

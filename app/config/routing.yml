@@ -1,0 +1,22 @@
+# APP
+app_index:
+    path: /
+    defaults: { _controller: index_controller:indexAction }
+app_create_user:
+    path: /create_user
+    defaults: { _controller: index_controller:createUserAction }
+app_login:
+    path: /login
+    defaults: { _controller: security_controller:loginAction }
+app_login_check:
+    path: /login_check
+app_logout:
+    path: /logout
+
+
+# API
+api_login:
+    path: /api/login
+api_index:
+    path: /api
+    defaults: { _controller: api_controller:indexAction }

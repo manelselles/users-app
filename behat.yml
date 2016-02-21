@@ -1,0 +1,21 @@
+default:
+  autoload:
+    '': %paths.base%/tests/functional/bootstrap
+  extensions:
+    Behat\Symfony2Extension: ~
+    Behat\MinkExtension:
+      #base_url: http://localhost:8000
+      sessions:
+        default:
+          symfony2: ~
+  suites:
+    default:
+      paths: [ %paths.base%/tests/functional/features/ ]
+      contexts:
+        - SetupContext
+        - HttpContext:
+            baseUrl: http://localhost:8000
+        - UserContext:
+            userRepository: '@user_repository'
+            createUser: '@create_user'
+            session: '@session'
