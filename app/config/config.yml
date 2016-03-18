@@ -41,10 +41,10 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         naming_strategy: doctrine.orm.naming_strategy.underscore
         mappings:
-          UsersApp:
-            type: yml
-            dir: %kernel.root_dir%/../src/Infrastructure/Persistence/Doctrine/mappings
-            prefix: UsersApp\Infrastructure\Authentication
+            UsersApp:
+                type: yml
+                dir: %kernel.root_dir%/../src/Infrastructure/Persistence/Doctrine/mappings
+                prefix: UsersApp\Infrastructure\Authentication
 
 # Lexik JWT Configuration
 lexik_jwt_authentication:
