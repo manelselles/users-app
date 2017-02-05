@@ -7,8 +7,7 @@
             "UsersApp\\": "src/"
         },
         "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
+            "app/AppKernel.php"
         ]
     },
     "autoload-dev": {
