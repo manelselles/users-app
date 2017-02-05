@@ -18,7 +18,7 @@
     </php>
 
     <logging>
-        <log type="coverage-html" target="build/coverage/unit/phpunit-coverage" />
+        <log type="coverage-html" target="build/coverage/unit" />
         <log type="coverage-clover" target="build/coverage/unit/phpunit-coverage.xml" />
         <log type="junit" target="build/coverage/unit/phpunit.xml" logIncompleteSkipped="false" />
     </logging>
