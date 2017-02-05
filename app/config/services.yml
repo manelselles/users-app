@@ -11,6 +11,13 @@ services:
         class: UsersApp\Infrastructure\Ui\Http\APIController
         arguments: ['@user_repository', '@create_user']
 
+    # Cli command
+    users_cli_command:
+        class: UsersApp\Infrastructure\Ui\Cli\UsersCommand
+        arguments: ['@create_user', '@user_repository']
+        tags:
+          - { name: console.command }
+
     # Application service
     create_user:
         class: UsersApp\Application\CreateUser
